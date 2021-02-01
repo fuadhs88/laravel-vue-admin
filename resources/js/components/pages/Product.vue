@@ -220,7 +220,7 @@ export default {
 
             Toast.fire({
               icon: 'error',
-              title: 'Some error occured! Please try again'
+              title: 'Some error occurred! Please try again'
             });
           })
     },

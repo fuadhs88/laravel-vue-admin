@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Requests\Products\ProductRequest;
 use App\Models\Product;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ProductController extends BaseController
 {
@@ -27,7 +27,7 @@ class ProductController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function index()
     {
@@ -39,15 +39,15 @@ class ProductController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ProductRequest  $request
-     * @return Response
+     * @param ProductRequest $request
+     * @return JsonResponse
      */
     public function store(ProductRequest $request)
     {
         $product = $this->product->create([
-            'name' => $request->get('name'),
+            'name'        => $request->get('name'),
             'description' => $request->get('description'),
-            'price' => $request->get('price'),
+            'price'       => $request->get('price'),
             'category_id' => $request->get('category_id'),
         ]);
 
@@ -65,7 +65,7 @@ class ProductController extends BaseController
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return JsonResponse
      */
     public function show(int $id)
     {
@@ -79,7 +79,7 @@ class ProductController extends BaseController
      *
      * @param ProductRequest $request
      * @param int $id
-     * @return Response
+     * @return JsonResponse
      */
     public function update(ProductRequest $request, int $id)
     {
@@ -101,7 +101,7 @@ class ProductController extends BaseController
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return JsonResponse
      * @throws AuthorizationException
      */
     public function destroy(int $id)
