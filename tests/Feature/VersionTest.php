@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class VersionTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * Test APP Version
      * Simple test to validate everything is working
