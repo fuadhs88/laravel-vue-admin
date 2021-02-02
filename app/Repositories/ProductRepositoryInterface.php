@@ -13,10 +13,10 @@ interface ProductRepositoryInterface
 
     /**
      * Get one
-     * @param $id
+     * @param int $id
      * @return mixed
      */
-    public function find($id);
+    public function find(int $id);
 
     /**
      * Create
@@ -27,25 +27,25 @@ interface ProductRepositoryInterface
 
     /**
      * Update
-     * @param $id
+     * @param int $id
      * @param array $attributes
      * @return mixed
      */
-    public function update($id, array $attributes);
+    public function update(int $id, array $attributes);
 
     /**
      * Delete
-     * @param $id
+     * @param int $id
      * @return mixed
      */
-    public function delete($id);
+    public function delete(int $id);
 
     /**
      * Pagination
-     * @param $perPage
+     * @param int $perPage
      * @return mixed
      */
-    public function paginate($perPage);
+    public function paginate(int $perPage);
 
     /**
      * Pagination

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Requests\Products\ProductRequest;
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,16 +13,22 @@ class ProductController extends BaseController
 {
 
     protected $product = '';
+    /**
+     * @var ProductRepository
+     */
+    private $repository;
 
     /**
      * Create a new controller instance.
      *
      * @param Product $product
+     * @param ProductRepository $repository
      */
-    public function __construct(Product $product)
+    public function __construct(Product $product, ProductRepository $repository)
     {
         $this->middleware('auth:api');
         $this->product = $product;
+        $this->repository = $repository;
     }
 
     /**
@@ -31,7 +38,7 @@ class ProductController extends BaseController
      */
     public function index()
     {
-        $products = $this->product->latest()->with('category', 'tags')->paginate(10);
+        $products = $this->repository->latest()->with('category', 'tags')->paginate(10);
 
         return $this->sendResponse($products, 'Product list');
     }
@@ -56,7 +63,9 @@ class ProductController extends BaseController
         foreach ($request->get('tags') as $tag) {
             $tag_ids[] = $tag['id'];
         }
-        $product->tags()->sync($tag_ids);
+        // $product->tags()->sync($tag_ids);
+
+        $this->repository->addTags($product, $tag_ids);
 
         return $this->sendResponse($product, 'Product Created Successfully');
     }

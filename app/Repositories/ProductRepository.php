@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
-use App\Repositories\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -27,14 +27,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     /**
      * Get one
-     * @param $id
+     * @param int $id
      * @return mixed
      */
-    public function find($id)
+    public function find(int $id)
     {
-        $result = $this->model->find($id);
-
-        return $result;
+        return $this->model->find($id);
     }
 
     /**
@@ -44,17 +42,16 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function create(array $attributes)
     {
-
         return $this->model->create($attributes);
     }
 
     /**
      * Update
-     * @param $id
+     * @param int $id
      * @param array $attributes
      * @return bool|mixed
      */
-    public function update($id, array $attributes)
+    public function update(int $id, array $attributes)
     {
         $result = $this->find($id);
         if ($result) {
@@ -68,10 +65,10 @@ class ProductRepository implements ProductRepositoryInterface
     /**
      * Delete
      *
-     * @param $id
+     * @param int $id
      * @return bool
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $result = $this->find($id);
         if ($result) {
@@ -85,10 +82,10 @@ class ProductRepository implements ProductRepositoryInterface
 
     /**
      * Pagination
-     * @param $perPage
+     * @param int $perPage
      * @return mixed
      */
-    public function paginate($perPage)
+    public function paginate(int $perPage)
     {
         return $this->model->paginate($perPage);
     }
@@ -109,7 +106,7 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @return mixed
      */
-    public function show($id)
+    public function show(int $id)
     {
         return $this->model->findOrFail($id);
     }
@@ -127,11 +124,11 @@ class ProductRepository implements ProductRepositoryInterface
     /**
      * Set the associated model
      *
-     * @param $model
+     * @param Model $model
      *
      * @return mixed
      */
-    public function setModel($model)
+    public function setModel(Model $model)
     {
         $this->model = $model;
         return $this;
@@ -142,15 +139,16 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @param String $relations
      *
+     * @return Builder
      */
-    public function with($relations)
+    public function with(string $relations)
     {
         return $this->model->with($relations);
     }
 
     /**
      * On method call
-     * To use Eloquent Methods which are not exist on repository 
+     * To use Eloquent Methods which are not exist on repository
      *  Example Eloquent findOrFail() method
      *
      * @param $method
@@ -165,5 +163,10 @@ class ProductRepository implements ProductRepositoryInterface
         } else {
             return $this->model->$method(...$arguments);
         }
+    }
+
+    public function addTags(Product $product, array $tagIds)
+    {
+        $product->tags()->sync($tagIds);
     }
 }
