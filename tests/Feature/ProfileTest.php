@@ -43,10 +43,10 @@ class ProfileTest extends TestCase
      */
     public function testProfileDataWithoutAuth()
     {
-        //$user = User::factory()->create();
+        $user = User::factory()->create();
 
         $response = $this->getJson('/api/profile');
-        dd($response);
+        //dd($response);
         $response->assertStatus(401);
     }
 
