@@ -4,9 +4,11 @@ namespace App\Repositories;
 
 interface ProductRepositoryInterface
 {
+
+    const PER_PAGE = 10;
     /**
      * Get all
-     * @return mixed
+     * @return self
      */
     public function get();
 
@@ -14,14 +16,14 @@ interface ProductRepositoryInterface
     /**
      * Get one
      * @param int $id
-     * @return mixed
+     * @return self
      */
     public function find(int $id);
 
     /**
      * Create
      * @param array $attributes
-     * @return mixed
+     * @return self
      */
     public function create(array $attributes);
 
@@ -29,7 +31,7 @@ interface ProductRepositoryInterface
      * Update
      * @param int $id
      * @param array $attributes
-     * @return mixed
+     * @return self
      */
     public function update(int $id, array $attributes);
 
@@ -42,14 +44,13 @@ interface ProductRepositoryInterface
 
     /**
      * Pagination
-     * @param int $perPage
-     * @return mixed
+     * @return self
      */
-    public function paginate(int $perPage);
+    public function paginate();
 
     /**
      * Pagination
-     * @return mixed
+     * @return self
      */
     public function latest();
 }

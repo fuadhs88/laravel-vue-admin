@@ -32,7 +32,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function find(int $id)
     {
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 
     /**
@@ -73,7 +73,6 @@ class ProductRepository implements ProductRepositoryInterface
         $result = $this->find($id);
         if ($result) {
             $result->delete();
-
             return true;
         }
 
@@ -82,12 +81,11 @@ class ProductRepository implements ProductRepositoryInterface
 
     /**
      * Pagination
-     * @param int $perPage
      * @return mixed
      */
-    public function paginate(int $perPage)
+    public function paginate()
     {
-        return $this->model->paginate($perPage);
+        return $this->model->paginate(self::PER_PAGE);
     }
 
     /**
@@ -104,11 +102,11 @@ class ProductRepository implements ProductRepositoryInterface
      *
      * @param int $id
      *
-     * @return mixed
+     * @return self
      */
     public function show(int $id)
     {
-        return $this->model->findOrFail($id);
+        return $this->find($id);
     }
 
     /**
